@@ -1,0 +1,15 @@
+Package: rforceplots
+Type: Package
+Title: Additive Force Plots 
+Version: 0.1.0
+Author: 
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: The package is a stand-alone wrapper for the shapjs package to facilitate rendering additive force plots in R.
+  Besides a user-friendly function for plotting and Shiny bindings, the package also exports the three base visualisation functions from shapjs.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    htmltools,
+    htmlwidgets,
+    reactR
