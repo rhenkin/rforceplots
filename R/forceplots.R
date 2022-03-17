@@ -39,7 +39,7 @@ SimpleListVisualizer <-
       reactR::reactMarkup(component),
       width = width,
       height = height,
-      package = 'forceplots',
+      package = 'rforceplots',
       elementId = NULL
     )
   }
@@ -91,7 +91,7 @@ AdditiveForceVisualizer <-
     reactR::reactMarkup(component),
     width = width,
     height = height,
-    package = 'forceplots',
+    package = 'rforceplots',
     elementId = NULL
   )
   }
@@ -143,7 +143,7 @@ AdditiveForceArrayVisualizer <-
       reactR::reactMarkup(component),
       width = width,
       height = height,
-      package = 'forceplots',
+      package = 'rforceplots',
       elementId = NULL
     )
   }
@@ -178,7 +178,7 @@ widget_html.ForcePlots <- function(id, style, class, ...) {
 #'
 #' @export
 forcePlotOutput <- function(outputId, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(outputId, 'ForcePlots', width, height, package = 'forceplots')
+  htmlwidgets::shinyWidgetOutput(outputId, 'ForcePlots', width, height, package = 'rforceplots')
 }
 
 #' @rdname shapjs-shiny
