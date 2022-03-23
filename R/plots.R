@@ -1,17 +1,17 @@
-#' <Add Title>
+#' Display simple feature plot
 #'
-#' <Add Description>
+#' This function uses the SimpleListVisualizer component from the shapjs package
 #'
-#' @param features
-#' @param featureNames
-#' @param plot_cmap
-#' @param width
-#' @param height
+#' @param features A named list of features with effects
+#' @param featureNames Optional named list matching indices with names
+#' @param plot_cmap Optional color map to pass to component
+#' @param width Optional widget width
+#' @param height Optional widget height
 #'
 #' @import htmlwidgets
 #'
 #' @export
-SimpleListVisualizer <-
+SimpleListPlot <-
   function(features,
            featureNames = NULL,
            plot_cmap = NULL,
@@ -49,28 +49,35 @@ SimpleListVisualizer <-
 #'
 #' Create a force plot widget for a single explanation
 #'
-#' @param baseValue
-#' @param outNames
-#' @param features
-#' @param link
-#' @param plot_cmap
-#' @param width
-#' @param height
+#' @param baseValue Baseline for predictions
+#' @param features List of features effects and values. This should be a list of
+#' lists where each sublist has names effect and value. See example.
+#' @param featureNames Optional named list of feature names
+#' @param outNames Optional list of the target variable names
+#' @param link Optional link function to use (identity is default)
+#' @param plot_cmap Optional color map to pass to component
+#' @param width Optional widget width
+#' @param height Optional optional widget height
 #'
 #' @import htmlwidgets
 #'
 #' @export
-AdditiveForceVisualizer <-
+AdditiveForcePlot <-
   function(baseValue,
-           outNames,
            features,
-           featureNames,
+           featureNames = NULL,
+           outNames = NULL,
            link = c("identity", "logit"),
            plot_cmap = NULL,
            width = NULL,
            height = NULL) {
 
   link <- match.arg(link)
+
+  if (is.vector(outNames)) outNames <- as.list(outNames)
+
+  if (is.null(featureNames))
+      featureNames <- seq_len(length(features))
 
   features  <- jsonlite::toJSON(features, auto_unbox = T)
 
@@ -96,27 +103,28 @@ AdditiveForceVisualizer <-
   )
   }
 
-#' Single additive force plot
+#' Additive force plots for array of explanations
 #'
-#' Create a force plot widget for a single explanation
+#' Create a force plot widget for multiple explanations
 #'
-#' @param baseValue
-#' @param outNames
-#' @param explanations
-#' @param featureNames
-#' @param link
-#' @param plot_cmap
-#' @param width
-#' @param height
+#' @param baseValue Baseline for predictions
+#' @param explanations List of explanations containing outValue (predicted
+#' value), simIndex (similarity index) and features list of effects and values.
+#' @param featureNames Optional named list of feature names
+#' @param outNames Optional list of the target variable names
+#' @param link Optional link function to use (identity is default)
+#' @param plot_cmap Optional color map to pass to component
+#' @param width Optional widget width
+#' @param height Optional optional widget height
 #'
 #' @import htmlwidgets
 #'
 #' @export
-AdditiveForceArrayVisualizer <-
+AdditiveForceArrayPlot<-
   function(baseValue,
-           outNames,
            explanations,
            featureNames,
+           outNames = "",
            link = c("identity", "logit"),
            plot_cmap = NULL,
            width = NULL,
@@ -124,7 +132,7 @@ AdditiveForceArrayVisualizer <-
 
     link <- match.arg(link)
 
-    features  <- jsonlite::toJSON(features, auto_unbox = T)
+    explanations  <- jsonlite::toJSON(explanations, auto_unbox = T)
 
     component <-
       reactR::component(
@@ -160,7 +168,7 @@ widget_html.ForcePlots <- function(id, style, class, ...) {
   )
 }
 
-#' Shiny bindings for shapjs
+#' Shiny bindings for force plots
 #'
 #' Output and render functions for using shapjs within Shiny
 #' applications and interactive Rmd documents.
@@ -169,7 +177,7 @@ widget_html.ForcePlots <- function(id, style, class, ...) {
 #' @param width,height Must be a valid CSS unit (like \code{'100\%'},
 #'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
 #'   string and have \code{'px'} appended.
-#' @param expr An expression that generates a shapjs
+#' @param expr An expression that generates a force plot
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
@@ -181,7 +189,7 @@ forcePlotOutput <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'ForcePlots', width, height, package = 'rforceplots')
 }
 
-#' @rdname shapjs-shiny
+#' @rdname forceplots-shiny
 #' @export
 renderForcePlot <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
