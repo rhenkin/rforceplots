@@ -1,12 +1,12 @@
-#' Display additive force plots for shapr explanation objecs
+#' Additive force plots for shapr explanation objects
 #'
-#' @param explanation A \code{shapr} object, created with the [shapr::explain()]
-#' method
+#' @param explanation A \code{shapr} object created with [shapr::explain()]
 #' @param i Index for single object explanation
-#' @param ... Additional parameters to [rforceplots::AdditiveForcePlot()] or
+#' @param ... Additional parameters for [rforceplots::AdditiveForcePlot()] or
 #'  [rforceplots::AdditiveForceArrayPlot()]
 #'
 #' @return An object of class \code{htmlwidget}
+#' @method ForcePlot shapr
 #' @export
 #'
 ForcePlot.shapr <- function(explanation, i = NULL, ...) {
@@ -26,8 +26,8 @@ ForcePlot.shapr <- function(explanation, i = NULL, ...) {
   if (is.null(i)) {
     # Iterate through samples to compute explanations
     explanations <- lapply(seq_len(nrow(shaps)), function(row_index) {
-      values <- data[row_index,]
-      effects <- shaps[row_index,]
+      values <- data[row_index, ]
+      effects <- shaps[row_index, ]
       features <-
         lapply(featureNames,
                function(x) list(value = values[[x]], effect = effects[[x]]))
@@ -40,8 +40,10 @@ ForcePlot.shapr <- function(explanation, i = NULL, ...) {
     AdditiveForceArrayPlot(baseValue, explanations, featureNames, ...)
   } else {
     # If i is defined, display only a single force plot
-    values <- data[i,]
-    effects <- shaps[i,]
+    if (i > nrow(data)) stop("Invalid sample index in original data")
+    if (i > nrow(shaps)) stop("Invalid sample index in explanations")
+    values <- data[i, ]
+    effects <- shaps[i, ]
     features <-
       lapply(featureNames,
              function(x) list(value = values[[x]], effect = effects[[x]]))

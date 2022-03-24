@@ -2,22 +2,21 @@
 % Please edit documentation in R/shapr.R
 \name{ForcePlot.shapr}
 \alias{ForcePlot.shapr}
-\title{Display additive force plots for shapr explanation objecs}
+\title{Additive force plots for shapr explanation objects}
 \usage{
-ForcePlot.shapr(explanation, i = NULL, ...)
+\method{ForcePlot}{shapr}(explanation, i = NULL, ...)
 }
 \arguments{
-\item{explanation}{A \code{shapr} object, created with the \code{\link[shapr:explain]{shapr::explain()}}
-method}
+\item{explanation}{A \code{shapr} object created with \code{\link[shapr:explain]{shapr::explain()}}}
 
 \item{i}{Index for single object explanation}
 
-\item{...}{Additional parameters to \code{\link[=AdditiveForcePlot]{AdditiveForcePlot()}} or
+\item{...}{Additional parameters for \code{\link[=AdditiveForcePlot]{AdditiveForcePlot()}} or
 \code{\link[=AdditiveForceArrayPlot]{AdditiveForceArrayPlot()}}}
 }
 \value{
 An object of class \code{htmlwidget}
 }
 \description{
-Display additive force plots for shapr explanation objecs
+Additive force plots for shapr explanation objects
 }

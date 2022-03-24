@@ -5,17 +5,21 @@ Version: 0.1.0
 Authors@R: c(person("Rafael", "Henkin",
                     email = "r.henkin@qmul.ac.uk", 
                     role = c("aut", "cre")),
-            person("Scott", "Lundberg", role = c("ctb","cph"), comment = "shapjs package" )
+            person("Scott", "Lundberg", role = c("ctb","cph"), comment = "shapjs javascript package" )
             )
 Maintainer: Rafael Henkin <r.henkin@qmul.ac.uk>
 Description: The package is a stand-alone wrapper for the shapjs package to facilitate rendering additive force plots in R.
-  Besides a single user-friendly function for plotting and Shiny bindings, the package also exports the three base visualisation functions from shapjs.
-License: MIT
+  It has a user-friendly function for plotting, Shiny bindings, compatibility with the shapr and shapper packages, and bindings for the three base visualisation functions from shapjs.
+License: MIT + file LICENSE
+URL: https://github.com/rhenkin/rforceplots
+BugReports: https://github.com/rhenkin/rforceplots/issues
 Encoding: UTF-8
 LazyData: true
 Imports: 
     htmltools,
     htmlwidgets,
-    reactR
+    reactR,
+    jsonlite,
+    seriation
 RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)

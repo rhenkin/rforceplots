@@ -19,20 +19,36 @@ AdditiveForcePlot(
 \item{baseValue}{Baseline for predictions}
 
 \item{features}{List of features effects and values. This should be a list of
-lists where each sublist has names effect and value. See example.}
+lists, where each sublist has \code{effect} and \code{value}. See example.}
 
-\item{featureNames}{Optional named list of feature names}
+\item{featureNames}{Optional named list or vector of feature names}
 
-\item{outNames}{Optional list of the target variable names}
+\item{outNames}{Optional target variable name}
 
-\item{link}{Optional link function to use (identity is default)}
+\item{link}{Optional link function to use: identity (default) or logit}
 
-\item{plot_cmap}{Optional color map to pass to component}
+\item{plot_cmap}{Optional color map to pass to component or list of two valid
+web color names or hex codes. Valid color maps are: RdBu, GnPR, CyPU, PkYg,
+DrDb, LpLb, YlDp and OrId.}
 
 \item{width}{Optional widget width}
 
-\item{height}{Optional optional widget height}
+\item{height}{Optional widget height}
 }
 \description{
 Create a force plot widget for a single explanation
+}
+\details{
+The feature naming is index-based. The \code{featureNames} parameter can be
+a named list or simply a vector of names in order of appearance in the
+code{features} list, as in the example below.
+}
+\examples{
+feature1 <- list(effect = 0.5, value = 1)
+feature2 <- list(effect = -0.5, value = 2)
+features <- list(feature1, feature2)
+featureNames <- c("Feature 1", "Feature 2")
+AdditiveForcePlot(0, features, featureNames)
+# Custom colors
+AdditiveForcePlot(0, features, featureNames, plot_camp = c("gold","red"))
 }

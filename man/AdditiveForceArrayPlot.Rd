@@ -7,7 +7,7 @@
 AdditiveForceArrayPlot(
   baseValue,
   explanations,
-  featureNames,
+  featureNames = NULL,
   outNames = "",
   link = c("identity", "logit"),
   plot_cmap = NULL,
@@ -18,21 +18,34 @@ AdditiveForceArrayPlot(
 \arguments{
 \item{baseValue}{Baseline for predictions}
 
-\item{explanations}{List of explanations containing outValue (predicted
-value), simIndex (similarity index) and features list of effects and values.}
+\item{explanations}{Named list of explanations containing outValue, simIndex
+and named list of features effects and values.}
 
-\item{featureNames}{Optional named list of feature names}
+\item{featureNames}{Optional named list or vector of feature names}
 
-\item{outNames}{Optional list of the target variable names}
+\item{outNames}{Optional target variable name}
 
-\item{link}{Optional link function to use (identity is default)}
+\item{link}{Optional link function to use: identity (default) or logit}
 
-\item{plot_cmap}{Optional color map to pass to component}
+\item{plot_cmap}{Optional color map to pass to component or list of two valid
+web color names or hex codes. Valid color maps are: RdBu, GnPR, CyPU, PkYg,
+DrDb, LpLb, YlDp and OrId.}
 
 \item{width}{Optional widget width}
 
-\item{height}{Optional optional widget height}
+\item{height}{Optional widget height}
 }
 \description{
 Create a force plot widget for multiple explanations
+}
+\details{
+The \code{explanations} parameter should be a list containing named
+sublists. Each sublist has the explanation for a sample with \code{outValue}
+as the predicted model value, \code{simIndex} as the precomputed similarity
+index and another named list called \code{features}, containing \code{effect}
+and \code{value}. See example for details.
+
+The feature naming is index-based. The \code{featureNames} parameter can be
+a named list or simply a vector of names in order of appearance in the
+code{features} list, as in the example below.
 }

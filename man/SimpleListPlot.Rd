@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{SimpleListPlot}
 \alias{SimpleListPlot}
-\title{Display simple feature plot}
+\title{Display simple feature effect plot}
 \usage{
 SimpleListPlot(
   features,
@@ -13,11 +13,14 @@ SimpleListPlot(
 )
 }
 \arguments{
-\item{features}{A named list of features with effects}
+\item{features}{A named list of features with \code{effect} and optional
+\code{name}}
 
-\item{featureNames}{Optional named list matching indices with names}
+\item{featureNames}{Optional named list or vector of feature names}
 
-\item{plot_cmap}{Optional color map to pass to component}
+\item{plot_cmap}{Optional color map to pass to component or list of two valid
+web color names or hex codes. Valid color maps are: RdBu, GnPR, CyPU, PkYg,
+DrDb, LpLb, YlDp and OrId.}
 
 \item{width}{Optional widget width}
 

@@ -8,7 +8,7 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   output$widgetOutput <- renderForcePlot(
-    AdditiveForceVisualizer(
+    AdditiveForcePlot(
       baseValue = 0.0,
       outNames = c("color rating"),
       features = list(
