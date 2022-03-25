@@ -9,11 +9,11 @@
 rforceplots is as a stand-alone wrapper for the
 [shapjs](https://www.npmjs.com/package/shapjs) node package to
 facilitate rendering additive force plots in R. It does not require
-Python or reticulate and is compatible with objects exported by the
-`shapper::individual_variable_effect()` and `shapr::explain()`
-functions. It’s compatible with Shiny and gives access to the three base
-visualization functions from the shapjs node package for custom SHAP
-explanation formats.
+Python or the reticulate package and is compatible with objects exported
+by the `shapper::individual_variable_effect()`, `shapr::explain()` and
+`fastshap::explain()` functions. It includes Shiny bindings and gives
+access to the three base visualization functions from the shapjs node
+package for custom SHAP explanation formats.
 
 ## Installation
 

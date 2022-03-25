@@ -1,15 +1,16 @@
 #' ForcePlots for compatible objects
 #'
-#' Method for \code{individual_variable_effect} and \code{shapr}
-#' objects. See [rforceplots::ForcePlot.individual_variable_effect()] and
-#' [rforceplots::ForcePlot.shapr()] for further documentation.
+#' Generic method for \code{shapper}, \code{shapr} and \code{fastshap} objects.
+#' See [rforceplots::ForcePlot.individual_variable_effect],
+#' [rforceplots::ForcePlot.shapr] and [rforceplots::ForcePlot.explain] for
+#' specific documentation.
 #'
 #' @param ... Parameters for the specific functions
 #'
 #' @return An object of class \code{htmlwidget}
 #' @export
 #'
-ForcePlot <- function(x, ...) {
+ForcePlot <- function(...) {
   UseMethod("ForcePlot")
 }
 

@@ -4,15 +4,19 @@
 \alias{ForcePlot.individual_variable_effect}
 \title{Additive force plots for individual_variable_effect objects}
 \usage{
-\method{ForcePlot}{individual_variable_effect}(ive, id = NULL, outName = NULL, ...)
+\method{ForcePlot}{individual_variable_effect}(ive, baseValue, id = NULL, outName = NULL, ...)
 }
 \arguments{
 \item{ive}{An \code{individual_variable_effect} object created with
 \code{\link[shapper:individual_variable_effect]{shapper::individual_variable_effect()}}}
 
-\item{id}{An object identifier if the ive object contains multiple ids}
+\item{baseValue}{Base value for prediction (e.g. mean of all predictions)}
 
-\item{outName}{A class identifier for multiclass models (\emph{ylevel} variable)}
+\item{id}{Optional object identifier if the \code{ive} object contains
+multiple ids}
+
+\item{outName}{Output name. Optional for plotting but required for multiclass
+models (values in \code{_ylevel_} variable)}
 
 \item{...}{Additional parameters for \code{\link[=AdditiveForcePlot]{AdditiveForcePlot()}} or
 \code{\link[=AdditiveForceArrayPlot]{AdditiveForceArrayPlot()}}}

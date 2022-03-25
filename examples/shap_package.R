@@ -1,3 +1,5 @@
+
+library(shapper)
 library(DALEX)
 library(rpart)
 library(randomForest)
@@ -27,7 +29,9 @@ ive_lm <- individual_variable_effect(lm(life_length ~ ., data = dragons),
                            data = dragons,
                            new_observation = dragons[1,])
 
-
+ive_cars <- individual_variable_effect(lm(carb ~ ., data = mtcars), 
+                           data = mtcars[,-11], 
+                           new_observation = mtcars[1,-11])
 test_dots <- function(value1, ...) {
   dots <- match.call(expand.dots = TRUE)
   #print(names(dots))

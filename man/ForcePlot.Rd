@@ -13,7 +13,8 @@ ForcePlot(...)
 An object of class \code{htmlwidget}
 }
 \description{
-Method for \code{individual_variable_effect} and \code{shapr}
-objects. See \code{\link[=ForcePlot.individual_variable_effect]{ForcePlot.individual_variable_effect()}} and
-\code{\link[=ForcePlot.shapr]{ForcePlot.shapr()}} for further documentation.
+Generic method for \code{shapper}, \code{shapr} and \code{fastshap} objects.
+See \link{ForcePlot.individual_variable_effect},
+\link{ForcePlot.shapr} and \link{ForcePlot.explain} for
+specific documentation.
 }

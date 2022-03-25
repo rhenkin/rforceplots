@@ -2,9 +2,11 @@
 #'
 #' @param ive An \code{individual_variable_effect} object created with
 #'  [shapper::individual_variable_effect()]
-#' @param id An object identifier if the ive object contains multiple ids
-#' @param outName A class identifier for multiclass models (_ylevel_ variable)
-#' @param baseValue Optional base value for prediction. Default is 0.
+#' @param baseValue Base value for prediction (e.g. mean of all predictions)
+#' @param id Optional object identifier if the \code{ive} object contains
+#' multiple ids
+#' @param outName Output name. Optional for plotting but required for multiclass
+#' models (values in \code{_ylevel_} variable)
 #' @param ... Additional parameters for [rforceplots::AdditiveForcePlot()] or
 #'  [rforceplots::AdditiveForceArrayPlot()]
 #'
@@ -14,7 +16,7 @@
 #' @export
 #'
 ForcePlot.individual_variable_effect <-
-  function(ive, id = NULL, outName = NULL, baseValue = 0, ...) {
+  function(ive, baseValue, id = NULL, outName = NULL, ...) {
 
   featureNames <- unique(ive$`_vname_`)
 
@@ -23,16 +25,18 @@ ForcePlot.individual_variable_effect <-
   data <- sample_data[!duplicated(sample_data), ]
 
   # Extract shap related values
-  shap_l <- ive[, c("_id_", "_ylevel_", "_yhat_", "_vname_", "_attribution_")]
+  shap_l <-
+    ive[,
+        c("_id_", "_ylevel_", "_yhat_", "_ymean_", "_vname_", "_attribution_")]
   # Reshape data frame and rename columns to use featureNames
   shap_w <- stats::setNames(
     stats::reshape(
       shap_l,
       direction = "wide",
-      idvar = c("_id_", "_ylevel_", "_yhat_"),
+      idvar = c("_id_", "_ylevel_", "_yhat_", "_ymean_"),
       timevar = "_vname_"
     ),
-    c("_id_", "_ylevel_", "_yhat_", featureNames)
+    c("_id_", "_ylevel_", "_yhat_", "_ymean_", featureNames)
   )
 
   # outName is required if the ive object is multiclass
@@ -67,6 +71,8 @@ ForcePlot.individual_variable_effect <-
       shaps <-
         shap_w[with(shap_w, `_id_` == id), , drop = TRUE]
     }
+
+    baseValue <- shaps["_ymean_"]
 
     features <- lapply(featureNames, function(featName) {
       list(effect = shaps[[featName]],
