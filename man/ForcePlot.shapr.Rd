@@ -20,3 +20,16 @@ An object of class \code{htmlwidget}
 \description{
 Additive force plots for shapr explanation objects
 }
+\examples{
+if (require("shapr")) {
+ data(mtcars)
+ x_train <- mtcars[1:5,]
+ x_test <- mtcars[6:10, ]
+ model <- lm(mpg ~ disp + wt + drat, data = x_train)
+ explainer <- shapr(x_train, model)
+ p <- mean(x_train$mpg)
+ explanation <- explain(x_test, explainer, approach = "empirical",
+ prediction_zero = p, n_samples = 1e2)
+ ForcePlot(explanation)
+}
+}

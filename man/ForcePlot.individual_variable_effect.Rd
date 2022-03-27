@@ -4,13 +4,11 @@
 \alias{ForcePlot.individual_variable_effect}
 \title{Additive force plots for individual_variable_effect objects}
 \usage{
-\method{ForcePlot}{individual_variable_effect}(ive, baseValue, id = NULL, outName = NULL, ...)
+\method{ForcePlot}{individual_variable_effect}(ive, id = NULL, outName = NULL, ...)
 }
 \arguments{
 \item{ive}{An \code{individual_variable_effect} object created with
 \code{\link[shapper:individual_variable_effect]{shapper::individual_variable_effect()}}}
-
-\item{baseValue}{Base value for prediction (e.g. mean of all predictions)}
 
 \item{id}{Optional object identifier if the \code{ive} object contains
 multiple ids}
@@ -26,4 +24,17 @@ An object of class \code{htmlwidget}
 }
 \description{
 Additive force plots for individual_variable_effect objects
+}
+\examples{
+\donttest{
+# Run the code to create an individual variable effect object (e.g. ive_rf)
+# Then call ForcePlot on the created object
+if (exists("ive_rf")) {
+# Plot id 1 for single class prediction
+# Will fail if multiclass
+ForcePlot(ive_rf, id = 1)
+# Force plot of all tested observations for single class prediction
+ForcePlot(ive_rf)
+}
+}
 }

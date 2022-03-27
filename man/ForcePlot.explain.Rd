@@ -4,14 +4,15 @@
 \alias{ForcePlot.explain}
 \title{Additive force plots for fastshap explanation objects}
 \usage{
-\method{ForcePlot}{explain}(shaps, features, baseValue, ...)
+\method{ForcePlot}{explain}(shaps, features, baseValue = NULL, ...)
 }
 \arguments{
 \item{shaps}{An \code{explain} object created with \code{\link[fastshap:explain]{fastshap::explain()}}}
 
 \item{features}{Data used for model training or new data that was explained}
 
-\item{baseValue}{Baseline for predictions}
+\item{baseValue}{Optional baseline for predictions (e.g. mean of all
+predictions)}
 
 \item{...}{Additional parameters for \code{\link[=AdditiveForcePlot]{AdditiveForcePlot()}} or
 \code{\link[=AdditiveForceArrayPlot]{AdditiveForceArrayPlot()}}}
@@ -23,7 +24,7 @@ An object of class \code{htmlwidget}
 Additive force plots for fastshap explanation objects
 }
 \examples{
-if (!require("fastshap") {
+if (interactive() & require("fastshap")) {
    data(mtcars)
    mtcars.ppr <- ppr(mpg ~ ., data = mtcars, terms = 1)
    # Compute approximate Shapley values using 10 Monte Carlo simulations

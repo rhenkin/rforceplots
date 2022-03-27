@@ -30,6 +30,12 @@ ForcePlot <- function(...) {
 #' @import htmlwidgets
 #'
 #' @export
+#'
+#' @examples
+#' feature_1 <- list(name = "A", effect = 0.5)
+#' feature_2 <- list(name = "B", effect = -1)
+#' features <- list(feature_1, feature_2)
+#' SimpleListPlot(features)
 SimpleListPlot <-
   function(features,
            featureNames = NULL,
@@ -93,9 +99,7 @@ SimpleListPlot <-
 #' feature2 <- list(effect = -0.5, value = 2)
 #' features <- list(feature1, feature2)
 #' featureNames <- c("Feature 1", "Feature 2")
-#' AdditiveForcePlot(0, features, featureNames)
-#' # Custom colors
-#' AdditiveForcePlot(0, features, featureNames, plot_camp = c("gold","red"))
+#' AdditiveForcePlot(0, features, featureNames, plot_cmap = c("gold","red"))
 AdditiveForcePlot <-
   function(baseValue,
            features,
@@ -170,10 +174,31 @@ AdditiveForcePlot <-
 #' @import htmlwidgets
 #'
 #' @export
+#'
+#' @examples
+#' featureNames <- c("A", "B")
+#' outValue_1 <- 0.5
+#' simIndex_1 <- 2
+#' features_1 <- list(
+#'                  list(effect = 0.5, value = 1),
+#'                  list(effect = -0.5, value = 2)
+#'                )
+#' explanation_1 <-
+#'    list(outValue = outValue_1, simIndex = simIndex_1, features = features_1)
+#' outValue_2 <- 0.9
+#' simIndex_2 <- 1
+#' features_2 <- list(
+#'                  list(effect = -0.5, value = 0.5),
+#'                  list(effect = 0.5, value = 3)
+#'                )
+#' explanation_2 <-
+#'    list(outValue = outValue_2, simIndex = simIndex_2, features = features_2)
+#' explanations <- list(explanation_1, explanation_2)
+#' AdditiveForceArrayPlot(0, explanations, featureNames)
 AdditiveForceArrayPlot <-
   function(baseValue,
            explanations,
-           featureNames = NULL,
+           featureNames,
            outNames = "",
            link = c("identity", "logit"),
            plot_cmap = NULL,
@@ -183,9 +208,6 @@ AdditiveForceArrayPlot <-
     link <- match.arg(link)
 
     if (is.vector(outNames)) outNames <- as.list(outNames)
-
-    if (is.null(featureNames))
-      featureNames <- seq_len(length(features))
 
     explanations  <- jsonlite::toJSON(explanations, auto_unbox = T)
 
@@ -237,14 +259,15 @@ widget_html.ForcePlots <- function(id, style, class, ...) {
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
 #'
-#' @name forceplots-shiny
+#' @name rforceplots-shiny
 #'
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' if (interactive()) {
 #' library(shiny)
-#' library(forceplots)
+#' library(rforceplots)
 #'
 #' ui <- fluidPage(
 #'   titlePanel("reactR HTMLWidget Example"),
@@ -267,12 +290,13 @@ widget_html.ForcePlots <- function(id, style, class, ...) {
 #'
 #' shinyApp(ui, server)
 #' }
+#' }
 forcePlotOutput <- function(outputId, width = "100%", height = "400px") {
   htmlwidgets::shinyWidgetOutput(
     outputId, "ForcePlots", width, height, package = "rforceplots")
 }
 
-#' @rdname forceplots-shiny
+#' @rdname rforceplots-shiny
 #' @export
 renderForcePlot <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) expr <- substitute(expr) # force quoted

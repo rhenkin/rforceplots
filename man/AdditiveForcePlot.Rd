@@ -48,7 +48,5 @@ feature1 <- list(effect = 0.5, value = 1)
 feature2 <- list(effect = -0.5, value = 2)
 features <- list(feature1, feature2)
 featureNames <- c("Feature 1", "Feature 2")
-AdditiveForcePlot(0, features, featureNames)
-# Custom colors
-AdditiveForcePlot(0, features, featureNames, plot_camp = c("gold","red"))
+AdditiveForcePlot(0, features, featureNames, plot_cmap = c("gold","red"))
 }

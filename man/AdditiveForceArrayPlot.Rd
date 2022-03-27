@@ -7,7 +7,7 @@
 AdditiveForceArrayPlot(
   baseValue,
   explanations,
-  featureNames = NULL,
+  featureNames,
   outNames = "",
   link = c("identity", "logit"),
   plot_cmap = NULL,
@@ -48,4 +48,25 @@ and \code{value}. See example for details.
 The feature naming is index-based. The \code{featureNames} parameter can be
 a named list or simply a vector of names in order of appearance in the
 code{features} list, as in the example below.
+}
+\examples{
+featureNames <- c("A", "B")
+outValue_1 <- 0.5
+simIndex_1 <- 2
+features_1 <- list(
+                 list(effect = 0.5, value = 1),
+                 list(effect = -0.5, value = 2)
+               )
+explanation_1 <-
+   list(outValue = outValue_1, simIndex = simIndex_1, features = features_1)
+outValue_2 <- 0.9
+simIndex_2 <- 1
+features_2 <- list(
+                 list(effect = -0.5, value = 0.5),
+                 list(effect = 0.5, value = 3)
+               )
+explanation_2 <-
+   list(outValue = outValue_2, simIndex = simIndex_2, features = features_2)
+explanations <- list(explanation_1, explanation_2)
+AdditiveForceArrayPlot(0, explanations, featureNames)
 }

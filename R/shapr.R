@@ -9,6 +9,18 @@
 #' @method ForcePlot shapr
 #' @export
 #'
+#' @examples
+#' if (require("shapr")) {
+#'  data(mtcars)
+#'  x_train <- mtcars[1:5,]
+#'  x_test <- mtcars[6:10, ]
+#'  model <- lm(mpg ~ disp + wt + drat, data = x_train)
+#'  explainer <- shapr(x_train, model)
+#'  p <- mean(x_train$mpg)
+#'  explanation <- explain(x_test, explainer, approach = "empirical",
+#'  prediction_zero = p, n_samples = 1e2)
+#'  ForcePlot(explanation)
+#' }
 ForcePlot.shapr <- function(explanation, i = NULL, ...) {
   shaps <- explanation$dt
   data <- explanation$x_test
@@ -18,12 +30,12 @@ ForcePlot.shapr <- function(explanation, i = NULL, ...) {
   featureNames <- as.list(colnames(data))
   names(featureNames) <- seq_along(featureNames)
 
-  # Compute similarity index
-  dmat <- dist(shaps)
-  order <- seriation::get_order(seriation::seriate(dmat, method = "OLO"))
-  sim_index <- match(seq_len(nrow(shaps)), order)
-
   if (is.null(i)) {
+    # Compute similarity index
+    dmat <- stats::dist(shaps)
+    order <- seriation::get_order(seriation::seriate(dmat, method = "OLO"))
+    sim_index <- match(seq_len(nrow(shaps)), order)
+
     # Iterate through samples to compute explanations
     explanations <- lapply(seq_len(nrow(shaps)), function(row_index) {
       values <- data[row_index, ]

@@ -2,7 +2,6 @@
 #'
 #' @param ive An \code{individual_variable_effect} object created with
 #'  [shapper::individual_variable_effect()]
-#' @param baseValue Base value for prediction (e.g. mean of all predictions)
 #' @param id Optional object identifier if the \code{ive} object contains
 #' multiple ids
 #' @param outName Output name. Optional for plotting but required for multiclass
@@ -15,8 +14,20 @@
 #' @method ForcePlot individual_variable_effect
 #' @export
 #'
+#' @examples
+#' \donttest{
+#' # Run the code to create an individual variable effect object (e.g. ive_rf)
+#' # Then call ForcePlot on the created object
+#' if (exists("ive_rf")) {
+#' # Plot id 1 for single class prediction
+#' # Will fail if multiclass
+#' ForcePlot(ive_rf, id = 1)
+#' # Force plot of all tested observations for single class prediction
+#' ForcePlot(ive_rf)
+#' }
+#' }
 ForcePlot.individual_variable_effect <-
-  function(ive, baseValue, id = NULL, outName = NULL, ...) {
+  function(ive, id = NULL, outName = NULL, ...) {
 
   featureNames <- unique(ive$`_vname_`)
 
@@ -27,16 +38,16 @@ ForcePlot.individual_variable_effect <-
   # Extract shap related values
   shap_l <-
     ive[,
-        c("_id_", "_ylevel_", "_yhat_", "_ymean_", "_vname_", "_attribution_")]
+        c("_id_", "_ylevel_", "_yhat_", "_yhat_mean_", "_vname_", "_attribution_")]
   # Reshape data frame and rename columns to use featureNames
   shap_w <- stats::setNames(
     stats::reshape(
       shap_l,
       direction = "wide",
-      idvar = c("_id_", "_ylevel_", "_yhat_", "_ymean_"),
+      idvar = c("_id_", "_ylevel_", "_yhat_", "_yhat_mean_"),
       timevar = "_vname_"
     ),
-    c("_id_", "_ylevel_", "_yhat_", "_ymean_", featureNames)
+    c("_id_", "_ylevel_", "_yhat_", "_yhat_mean_", featureNames)
   )
 
   # outName is required if the ive object is multiclass
@@ -72,7 +83,7 @@ ForcePlot.individual_variable_effect <-
         shap_w[with(shap_w, `_id_` == id), , drop = TRUE]
     }
 
-    baseValue <- shaps["_ymean_"]
+    baseValue <- shaps[["_yhat_mean_"]]
 
     features <- lapply(featureNames, function(featName) {
       list(effect = shaps[[featName]],
@@ -83,7 +94,7 @@ ForcePlot.individual_variable_effect <-
       baseValue = baseValue,
       features = features,
       featureNames = featureNames,
-      outName = outName,
+      outNames = outName,
       ...
     )
 
@@ -97,11 +108,13 @@ ForcePlot.individual_variable_effect <-
     sample_shap <- sample_shap[!duplicated(sample_shap), ]
     shaps <- sample_shap[, featureNames]
 
+    baseValue <- sample_shap[1,"_yhat_mean_"]
+
     #Get predicted values
     outValues <- shap_w[["_yhat_"]]
 
     # Compute shap values similarity
-    dmat <- dist(shaps)
+    dmat <- stats::dist(shaps)
     order <- seriation::get_order(seriation::seriate(dmat, method = "OLO"))
     sim_index <- match(seq_len(nrow(shaps)), order)
 

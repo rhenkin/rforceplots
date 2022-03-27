@@ -29,3 +29,9 @@ DrDb, LpLb, YlDp and OrId.}
 \description{
 This function uses the SimpleListVisualizer component from the shapjs package
 }
+\examples{
+feature_1 <- list(name = "A", effect = 0.5)
+feature_2 <- list(name = "B", effect = -1)
+features <- list(feature_1, feature_2)
+SimpleListPlot(features)
+}
